@@ -1,0 +1,5 @@
+[name]Example[/name]
+[title]Example[/title]
+[description]Full-stack developer with a passion for AI and machine learning[/description]
+[github]Example[/github]
+[discord]Example[/discord]
