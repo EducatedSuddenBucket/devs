@@ -1,5 +1,0 @@
-[name]John Doe[/name]
-[title]john-doe[/title]
-[description]Full-stack developer with a passion for AI and machine learning[/description]
-[github]johndoe[/github]
-[discord]JohnDoe#1234[/discord]
