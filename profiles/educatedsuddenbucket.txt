@@ -1,5 +1,4 @@
 [name]EducatedSuddenBucket[/name]
-[title]EducatedSuddenBucket[/title]
 [description]I a am a dev i think[/description]
 [github]EducatedSuddenBucket[/github]
 [discord]EducatedSuddenBucket[/discord]
