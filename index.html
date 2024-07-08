@@ -71,49 +71,80 @@
     <div id="fullProfile"></div>
 
     <script>
+        let config;
+
+        async function fetchConfig() {
+            const response = await fetch('https://api.github.com/repos/YourUsername/YourRepo/contents/profiles/config.json');
+            const data = await response.json();
+            const content = atob(data.content);
+            config = JSON.parse(content);
+        }
+
         async function fetchProfiles() {
-            const response = await fetch('https://api.github.com/repos/EducatedSuddenBucket/devs/contents/profiles');
-            const files = await response.json();
+            await fetchConfig();
             const profilesContainer = document.getElementById('profiles');
 
-            for (const file of files) {
-                if (file.name.endsWith('.txt')) {
-                    const content = await fetch(file.download_url).then(res => res.text());
-                    const profileDiv = document.createElement('div');
-                    profileDiv.className = 'profile';
-                    let profileData = {};
+            for (const [filename, hash] of Object.entries(config)) {
+                const response = await fetch(`https://api.github.com/repos/YourUsername/YourRepo/contents/profiles/${filename}`);
+                const data = await response.json();
+                const content = atob(data.content);
 
-                    const tagRegex = /\[(\w+)\]([\s\S]*?)\[\/\1\]/g;
-                    let match;
-                    while ((match = tagRegex.exec(content)) !== null) {
-                        profileData[match[1]] = match[2].trim();
-                    }
+                const profileDiv = document.createElement('div');
+                profileDiv.className = 'profile';
+                let profileData = {};
 
-                    console.log('Parsed profile data:', profileData); // Debug output
-
-                    profileDiv.innerHTML = `
-                        <h2 onclick="showFullProfile('${profileData.title || 'Untitled'}')">${profileData.name || 'Unnamed'}</h2>
-                        <p>${profileData.description || 'No description'}</p>
-                        <div class="social-icons">
-                            <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
-                            <img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
-                        </div>
-                    `;
-
-                    profilesContainer.appendChild(profileDiv);
+                const tagRegex = /\[(\w+)\]([\s\S]*?)\[\/\1\]/g;
+                let match;
+                while ((match = tagRegex.exec(content)) !== null) {
+                    profileData[match[1]] = match[2].trim();
                 }
+
+                profileDiv.innerHTML = `
+                    <h2 onclick="showFullProfile('${hash}')">${profileData.name || 'Unnamed'}</h2>
+                    <p>${profileData.description || 'No description'}</p>
+                    <div class="social-icons">
+                        <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
+                        <img src="https://discord.com/assets/847541504914fd33810e70a0ea73177e.ico" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
+                    </div>
+                `;
+
+                profilesContainer.appendChild(profileDiv);
             }
         }
 
-        function showFullProfile(title) {
+        async function showFullProfile(hash) {
             const fullProfileDiv = document.getElementById('fullProfile');
-            fullProfileDiv.innerHTML = `
-                <div class="close-btn" onclick="closeFullProfile()">×</div>
-                <h2>${title}</h2>
-                <!-- Add more profile details here -->
-            `;
+            const filename = Object.keys(config).find(key => config[key] === hash);
+            
+            if (filename) {
+                const response = await fetch(`https://api.github.com/repos/EducatedSuddenBucket/devs/contents/profiles/${filename}`);
+                const data = await response.json();
+                const content = atob(data.content);
+
+                let profileData = {};
+                const tagRegex = /\[(\w+)\]([\s\S]*?)\[\/\1\]/g;
+                let match;
+                while ((match = tagRegex.exec(content)) !== null) {
+                    profileData[match[1]] = match[2].trim();
+                }
+
+                fullProfileDiv.innerHTML = `
+                    <div class="close-btn" onclick="closeFullProfile()">×</div>
+                    <h2>${profileData.name || 'Unnamed'}</h2>
+                    <p>${profileData.description || 'No description'}</p>
+                    <p>GitHub: <a href="https://github.com/${profileData.github || ''}" target="_blank">${profileData.github || 'Not provided'}</a></p>
+                    <p>Discord: ${profileData.discord || 'Not provided'}</p>
+                    <!-- Add more profile details here -->
+                `;
+            } else {
+                fullProfileDiv.innerHTML = `
+                    <div class="close-btn" onclick="closeFullProfile()">×</div>
+                    <h2>Profile not found</h2>
+                `;
+            }
+            
             fullProfileDiv.style.display = 'block';
-            window.location.hash = title;
+            window.location.hash = hash;
         }
 
         function closeFullProfile() {
@@ -128,9 +159,9 @@
         }
 
         window.onhashchange = function() {
-            const profileTitle = window.location.hash.slice(1);
-            if (profileTitle) {
-                showFullProfile(profileTitle);
+            const hash = window.location.hash.slice(1);
+            if (hash) {
+                showFullProfile(hash);
             } else {
                 closeFullProfile();
             }
