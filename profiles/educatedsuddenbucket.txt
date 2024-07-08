@@ -2,3 +2,4 @@
 [description]I a am a dev i think[/description]
 [github]EducatedSuddenBucket[/github]
 [discord]EducatedSuddenBucket[/discord]
+[pfp] https://avatars.githubusercontent.com/u/149485703?v=4 [/pfp]
