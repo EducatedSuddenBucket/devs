@@ -1,4 +1,4 @@
-[name]name test[/name]
+[name]Example Name[/name]
 [description]Example Description[/description]
 [pfp] https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFDtR17i2TrO62cgGFTyfk8xakl3icLiBFaA&s [/pfp]
 [github]Example[/github]
