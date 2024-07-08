@@ -55,6 +55,15 @@
             padding: 20px;
             box-sizing: border-box;
         }
+        #fullProfile h2 {
+            font-size: 2em;
+            text-align: center;
+        }
+        #fullProfile p, #fullProfile .social-icons img {
+            font-size: 1.5em;
+            width: 36px;
+            height: 36px;
+        }
         .close-btn {
             position: absolute;
             top: 10px;
@@ -129,7 +138,7 @@
                 }
 
                 fullProfileDiv.innerHTML = `
-                    <div class="close-btn" onclick="closeFullProfile()">×</div>
+                    <div class="close-btn" onclick="location.href='https://yourspecifiedsite.com'">×</div>
                     <h2>${profileData.name || 'Unnamed'}</h2>
                     <p>${profileData.description || 'No description'}</p>
                     <div class="social-icons">
@@ -140,7 +149,7 @@
                 `;
             } else {
                 fullProfileDiv.innerHTML = `
-                    <div class="close-btn" onclick="closeFullProfile()">×</div>
+                    <div class="close-btn" onclick="location.href='https://https://educatedsuddenbucket.is-a.dev/devs'">×</div>
                     <h2>Profile not found</h2>
                 `;
             }
