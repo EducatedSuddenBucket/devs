@@ -1,3 +1,4 @@
+it seems the the color of the github logo is not proper , its backgound is white if i view it in new tab by goging to github.com/favicon.ico , but in the page the backgorund seems to become grey
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +43,7 @@
             width: 24px;
             height: 24px;
             cursor: pointer;
+            filter: invert(100%);
         }
         #fullProfile {
             position: fixed;
@@ -69,6 +71,7 @@
         #fullProfile .social-icons img {
             width: 36px;
             height: 36px;
+            filter: invert(100%);
         }
         .close-btn {
             position: absolute;
@@ -119,7 +122,7 @@
                     <p>${profileData.description || 'No description'}</p>
                     <div class="social-icons">
                         <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
-                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3c481a15a141738_icon_clyde_white_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
+                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6ac3c481f273141736_icon_clyde_black_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
                     </div>
                 `;
 
@@ -149,7 +152,7 @@
                     <p>${profileData.description || 'No description'}</p>
                     <div class="social-icons">
                         <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
-                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6cc3c481a15a141738_icon_clyde_white_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
+                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6ac3c481f273141736_icon_clyde_black_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
                     </div>
                     <!-- Add more profile details here -->
                 `;
