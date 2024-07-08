@@ -22,16 +22,22 @@
             border-radius: 6px;
             padding: 16px;
             margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+        }
+        .profile img, #fullProfile img {
+            max-width: 100px;
+            height: auto;
+            border-radius: 50%;
+            margin-right: 20px;
+        }
+        .profile-content {
+            flex: 1;
         }
         .profile h2, #fullProfile h2 {
             color: #58a6ff;
             margin-top: 0;
             cursor: pointer;
-        }
-        .profile img, #fullProfile img {
-            max-width: 100%;
-            height: auto;
-            margin-top: 10px;
         }
         .social-icons {
             display: flex;
@@ -55,6 +61,11 @@
             display: none;
             padding: 20px;
             box-sizing: border-box;
+            flex-direction: column;
+            align-items: center;
+        }
+        #fullProfile img {
+            margin-bottom: 20px;
         }
         #fullProfile h2 {
             font-size: 2em;
@@ -117,11 +128,14 @@
                 }
 
                 profileDiv.innerHTML = `
-                    <h2 onclick="showFullProfile('${hash}')">${profileData.name || 'Unnamed'}</h2>
-                    <p>${profileData.description || 'No description'}</p>
-                    <div class="social-icons">
-                        <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
-                        <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6ac3c481f273141736_icon_clyde_black_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
+                    <img src="${profileData.pfp || 'https://via.placeholder.com/100'}" alt="${profileData.name || 'Unnamed'}">
+                    <div class="profile-content">
+                        <h2 onclick="showFullProfile('${hash}')">${profileData.name || 'Unnamed'}</h2>
+                        <p>${profileData.description || 'No description'}</p>
+                        <div class="social-icons">
+                            <img src="https://github.com/favicon.ico" alt="GitHub" onclick="window.open('https://github.com/${profileData.github || ''}', '_blank')">
+                            <img src="https://cdn.prod.website-files.com/6257adef93867e50d84d30e2/636e0a6ac3c481f273141736_icon_clyde_black_RGB.png" alt="Discord" title="${profileData.discord || ''}" onclick="copyDiscord('${profileData.discord || ''}')">
+                        </div>
                     </div>
                 `;
 
@@ -147,6 +161,7 @@
 
                 fullProfileDiv.innerHTML = `
                     <div class="close-btn" onclick="location.href='https://educatedsuddenbucket.is-a.dev/devs/'">×</div>
+                    <img src="${profileData.pfp || 'https://via.placeholder.com/150'}" alt="${profileData.name || 'Unnamed'}">
                     <h2>${profileData.name || 'Unnamed'}</h2>
                     <p>${profileData.description || 'No description'}</p>
                     <div class="social-icons">
@@ -162,7 +177,7 @@
                 `;
             }
             
-            fullProfileDiv.style.display = 'block';
+            fullProfileDiv.style.display = 'flex';
             window.location.hash = hash;
         }
 
